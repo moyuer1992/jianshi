@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>简诗</title>
+
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body>
+    <div class="wrapper default">
+      <div class="tool-bar-wrap">
+      <span class="close-icon"></span>
+      <div class="tool-bar">
+        <div class="info">
+          <span class="avatar"></span>
+          <div class="tab">
+            <span class="tool-tab tab-item">
+              设置
+            </span>
+            <span class="center-tab tab-item">
+              我的简诗
+            </span>
+          </div>
+        </div>
+        <div class="item-wrap">
+          <div class="tool-bar-item i-font">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">字体</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="switch sub-item"></span> -->
+            <!-- <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-fontSize">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">字号</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="switch sub-item"></span> -->
+            <!--  <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-fontColor">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">颜色</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-textAlign">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">版式</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="switch sub-item"></span> -->
+            <!-- <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-background">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">背景</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <span class="color-switch sub-item"></span>
+            <!-- <span class="switch sub-item"></span> -->
+            <!-- <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-textStyle">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">样式</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="switch sub-item"></span> -->
+           <!--  <span class="swipe sub-item"></span> -->
+          </div>
+          <div class="tool-bar-item i-animation">
+            <span class="title sub-item">
+              <span class="icon"></span>
+              <span class="label">动画</span>
+            </span>
+            <span class="value sub-item">
+              <span class="text"></span>
+            </span>
+            <!-- <span class="switch sub-item"></span> -->
+            <!-- <span class="swipe sub-item"></span> -->
+          </div>
+        </div>
+        <div class="about">
+          <span class="text">关于简诗</span>
+        </div>
+      </div>
+    </div>
+    <div id="content-wrap">
+      <div class="main-content" id="main-content">
+        <div id="editor">
+          <canvas id="bg-canvas"></canvas>
+          <canvas id="bg-glcanvas"></canvas>
+          <canvas id="text-canvas"></canvas>
+          <canvas id="text-glcanvas"></canvas>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <span class="play bar-item"></span>
+        <span class="save bar-item"></span>
+        <span class="export bar-item"></span>
+        <span class="tool bar-item">
+          <span class="icon"></span>
+          <span class="label">工具栏</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="export-select-modal modal">
+    <div class="modal-content">
+      <div class="title-wrap">
+        <h3 class="title">选择导出格式</h3>
+      </div>
+      <div class="item-wrap">
+        <div class="item active">JPEG</div>
+        <div class="item">PNG</div>
+        <!-- <div class="item">GIF</div> -->
+      </div>
+      <div class="btn-wrap">
+        <span class="btn confirm">确定</span>
+        <span class="btn cancel">取消</span>
+      </div>
+    </div>
+  </div>
+  <div class="export-result-modal modal">
+    <div class="modal-content">
+      <div class="dim-layer"></div>
+      <span class="tip">右键弹出菜单中点击图片另存为</span>
+      <img id="export-result-image" class="export-result-image" loop=-1></img>
+    </div>
+  </div>
+
+  <div class="render-tip"></div>
+
+  <script src="scripts/vendor.js"></script>
+  <script src="scripts/scripts.js"></script>
+
+  </body>
+</html>

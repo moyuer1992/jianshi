@@ -1,0 +1,7 @@
+{
+  "name": "jianshi",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}

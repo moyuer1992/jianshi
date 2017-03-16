@@ -1,0 +1,131 @@
+$tool-bar-bg: #8c9691;
+$tool-bar-color: #47564f;
+
+.export-result-modal {
+  font-size: .14rem;
+  
+  .modal-content {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    z-index: 99;
+
+    .dim-layer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .tip {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: .4rem;
+    }
+
+    .export-result-image {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}
+
+.export-select-modal {
+  width: 2rem;
+  height: 1.6rem;
+  border: solid $tool-bar-bg 1px;
+  border-radius: .05rem;
+  background-color: #FEFEFE;
+  box-shadow: 1px 1px 1px 1px rgba(140, 150, 145, 0.25);
+  font-size: .14rem;
+
+  .modal-content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+
+    .title {
+      height: .4rem;
+      text-align: center;
+      background-color: $tool-bar-bg;
+      color: #FEFEFE;
+      margin: 0;
+      line-height: .4rem;
+      border-radius: .04rem .04rem 0 0;
+    }
+
+    .item-wrap {
+      .item {
+        color: $tool-bar-color;
+        height: .4rem;
+        line-height: .4rem;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+
+      .item:not(:last-child) {
+        border-bottom: 1px solid #EFEFEF;
+      }
+
+      .item.active {
+        background-color: rgba(140, 150, 145, 0.1);
+      }
+
+      .item:hover {
+        background-color: rgba(140, 150, 145, 0.3);
+      }
+    }
+
+    .btn-wrap {
+      height: .4rem;
+      border-radius: 0 0 .4rem .4rem;
+
+      .btn {
+        display: inline-block;
+        height: 100%;
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+        color: #FEFEFE;
+        line-height: .4rem;
+        cursor: pointer;
+        background-color: $tool-bar-bg;
+      }
+
+      .btn:hover {
+        background-color: rgba(140, 150, 145, 0.9);
+      }
+
+      .btn.confirm {
+        border-right: #FEFEFE solid 1px;
+        border-radius: 0 0 0 .04rem;
+      }
+
+      .btn.cancel {
+        border-radius: 0 0 .04rem 0;
+      }
+    }
+  }
+}
+
+.modal {
+  position: absolute;
+  display: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.modal.show {
+  display: block;
+}

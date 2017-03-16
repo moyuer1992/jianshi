@@ -4,7 +4,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "build": "node_modules/.bin/browserify app/scripts/main.js -o .tmp/scripts/bundle.js",
+    "build": "node_modules/.bin/browserify app/scripts/main.js -o app/scripts/bundle.js",
     "start": "npm run build && gulp serve"
   },
   "devDependencies": {
@@ -48,6 +48,7 @@
     }
   },
   "dependencies": {
-    "browserify": "^14.1.0"
+    "browserify": "^14.1.0",
+    "earcut": "^2.1.1"
   }
 }

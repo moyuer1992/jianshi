@@ -47,7 +47,7 @@ gulp.task('scripts', () => {
     'app/scripts/bgSprites/*.js',
     'app/scripts/editor/*.js',
     'app/scripts/components/*.js',
-    '.tmp/scripts/bundle.js'
+    'app/scripts/bundle.js'
   ])
   .pipe($.concat('scripts.js'))
   .pipe($.plumber())

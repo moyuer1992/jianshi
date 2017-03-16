@@ -3,3 +3,4 @@ dist
 .tmp
 public/vendor/*
 test/public
+app/scripts/bundle.js

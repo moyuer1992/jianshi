@@ -555,7 +555,6 @@ class Editor {
     if (this.map.length === 1 && this.map[0].length === 1) {
       this.textSprite.clear();
     } else {
-      $('.render-tip').addClass('show');
       setTimeout(this.textSprite.drawStatic.bind(this.textSprite), 10);
     }
   }

@@ -38,7 +38,6 @@ function makeTextData (text, size, options) {
   ctx.fillText(text, width / 2, height / 2);
   var imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
   var data = imageData.data;
-  console.log(data)
   var grid = 1;
 
   var triangle = function (a, b, c, index, options) {

@@ -26,7 +26,6 @@ class GlTextSprite extends TextSprite {
         }
       }
     }
-    $('.render-tip').removeClass('show');
   }
 
   getTextData (char) {

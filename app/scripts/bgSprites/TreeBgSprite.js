@@ -15,7 +15,7 @@ class TreeBgSprite extends BgSprite {
 
     this.renderGlMoon({
       pos: {x: 150, y: 150},
-      r: 100,
+      r: 70,
       t: 1.0,
       numTimesToSubdivide: 5
     });
@@ -23,14 +23,14 @@ class TreeBgSprite extends BgSprite {
     this.renderGlTree({
       pos: {x: this.ctx.canvas.width - 350, y: this.ctx.canvas.height},
       theta: 0.2,
-      minH: this.ctx.canvas.width / 80,
-      iniH: 30
+      minH: 20,
+      iniH: 35
     });
 
     this.renderGlTree({
       pos: {x: this.ctx.canvas.width - 200, y: this.ctx.canvas.height},
       theta: 0.2,
-      minH: this.ctx.canvas.width / 65,
+      minH: 20,
       iniH: 50
     });
   }
@@ -43,7 +43,7 @@ class TreeBgSprite extends BgSprite {
 
     this.renderGlMoon({
       pos: {x: 150, y: 150},
-      r: 100,
+      r: 70,
       t: this._t,
       numTimesToSubdivide: 5
     });
@@ -51,14 +51,14 @@ class TreeBgSprite extends BgSprite {
     this.renderGlTree({
       pos: {x: this.ctx.canvas.width - 350, y: this.ctx.canvas.height},
       theta: 0.2 * this._t,
-      minH: this.ctx.canvas.width / 80,
-      iniH: 30
+      minH: 20,
+      iniH: 35
     });
 
     this.renderGlTree({
       pos: {x: this.ctx.canvas.width - 200, y: this.ctx.canvas.height},
       theta: 0.2 * this._t,
-      minH: this.ctx.canvas.width / 65,
+      minH: 20,
       iniH: 50
     });
   }
@@ -102,7 +102,6 @@ class TreeBgSprite extends BgSprite {
 
       uniform vec4 ambientProduct, diffuseProduct, specularProduct;
       uniform mat4 modelViewMatrix;
-      uniform mat4 projectionMatrix;
       uniform vec4 lightPosition;
       uniform float shininess;
       uniform mat3 normalMatrix;
@@ -134,14 +133,14 @@ class TreeBgSprite extends BgSprite {
         }
 
         gl_PointSize = 1.0;
-        gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+        gl_Position = modelViewMatrix * vPosition;
 
         fColor = ambient + diffuse +specular;
         fColor.a = 1.0;
 
         if (dot(N, L) < 0.0) {
           fColor = vec4(1.0, 1.0, 0.9 - 0.2 * t, 1.0);
-        } else if (dot(N, L) < 0.9 + t * 0.09 ) {
+        } else if (dot(N, L) < 0.8 + t * 0.09 ) {
           fColor = vec4(1.0, 1.0, 0.9 - 0.1 * t, 1.0);
         } else {
           fColor = vec4(1.0, 1.0, 0.9 + 0.05 * t, 1.0);
@@ -169,9 +168,7 @@ class TreeBgSprite extends BgSprite {
         gl_PointSize = 1.0;
         gl_Position = vec4(vPosition, 0.0, 1.0);
 
-        //fColor = vec4(1.0, 1.0, 1.0, 0.8);
         fColor = vec4(0.8156862745098039, 0.8470588235294118, 0.8313725490196079, 1.0);
-        //fColor = vec4(0.5490196078431373, 0.5882352941176471, 0.5686274509803921, 0.9);
       }`, gl.VERTEX_SHADER);
 
     this.fragmentTreeShader = initGlShader(gl,
@@ -230,15 +227,15 @@ class TreeBgSprite extends BgSprite {
       cnt++;
 
       if (h >= minH) {
-        branch(left, h * 5 / 6, phi - theta, theta);
-        branch(right, h * 5 / 6, phi + theta, theta);
+        branch(left, h * 5 / 6, phi - theta, theta * 5 / 6);
+        branch(right, h * 5 / 6, phi + theta, theta * 5 / 6);
       }
     }
 
-    var h = options.iniH * 2 / this.ctx.canvas.height;
+    var h = options.iniH * 2 / 700;
     pointsArray.push(vec2(0.0, -1.0));
     pointsArray.push(vec2(0.0, -1.0 + h));
-    branch({ x: 0.0, y: -1.0 + h }, h * 5 / 6, 0, theta * 2 / 3);
+    branch({ x: 0.0, y: -1.0 + h }, h * 5 / 6, 0, theta * 5 / 6);
 
     var program = this.treeProgram;
     gl.useProgram( program );
@@ -305,7 +302,7 @@ class TreeBgSprite extends BgSprite {
       t = 1.0;
     }
     var phi = 0.1;
-    var theta = 0.2 + t * 0.5;
+    var theta = 0.5 + t * 0.2;
 
     var gl = this.gl;
     var program = this.moonProgram;
@@ -315,15 +312,9 @@ class TreeBgSprite extends BgSprite {
     var colorArray = [];
     var compIdxArray = [];
 
-    var near = -10;
-    var far = 10;
-    var radius = 1.5;
-    var dr = 5.0 * Math.PI/180.0;
-
-    var left = -3.0;
-    var right = 3.0;
-    var ytop =3.0;
-    var bottom = -3.0;
+    var radius = 0.5;
+    var theta  = 0.7;
+    var phi    = 0.1;
 
     var va = vec4(0.0, 0.0, -1.0,1);
     var vb = vec4(0.0, 0.942809, 0.333333, 1);
@@ -342,8 +333,8 @@ class TreeBgSprite extends BgSprite {
 
     var ambientColor, diffuseColor, specularColor;
 
-    var modelViewMatrix, projectionMatrix;
-    var modelViewMatrixLoc, projectionMatrixLoc;
+    var modelViewMatrix;
+    var modelViewMatrixLoc;
 
     var normalMatrix, normalMatrixLoc;
 
@@ -354,7 +345,7 @@ class TreeBgSprite extends BgSprite {
     gl.useProgram( program );
     gl.enable(gl.DEPTH_TEST);
 
-    gl.viewport(pos.x - 2 * r, this.ctx.canvas.height - ( pos.y + 2 * r ), 4 * r, 4 * r);
+    gl.viewport(pos.x - r, this.ctx.canvas.height - ( pos.y + r ), 2 * r, 2 * r);
 
     var ambientProduct = mult(lightAmbient, materialAmbient);
     var diffuseProduct = mult(lightDiffuse, materialDiffuse);
@@ -380,7 +371,6 @@ class TreeBgSprite extends BgSprite {
     gl.enableVertexAttribArray(vPosition);
 
     modelViewMatrixLoc = gl.getUniformLocation( program, "modelViewMatrix" );
-    projectionMatrixLoc = gl.getUniformLocation( program, "projectionMatrix" );
     normalMatrixLoc = gl.getUniformLocation( program, "normalMatrix" );
 
     gl.uniform4fv( gl.getUniformLocation(program,
@@ -400,7 +390,6 @@ class TreeBgSprite extends BgSprite {
     radius*Math.sin(theta)*Math.sin(phi), radius*Math.cos(theta));
 
     modelViewMatrix = lookAt(eye, at , up);
-    projectionMatrix = ortho(left, right, bottom, ytop, near, far);
 
     normalMatrix = [
       vec3(modelViewMatrix[0][0], modelViewMatrix[0][1], modelViewMatrix[0][2]),
@@ -409,7 +398,6 @@ class TreeBgSprite extends BgSprite {
     ];
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix) );
-    gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix) );
     gl.uniformMatrix3fv(normalMatrixLoc, false, flatten(normalMatrix) );
 
     gl.drawArrays( gl.TRIANGLES, 0, pointsArray.length);

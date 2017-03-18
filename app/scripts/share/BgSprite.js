@@ -13,6 +13,7 @@ class BgSprite {
     this.height = this.editor.canvasNode.height;
     this.ctx = this.editor.bgCtx;
     this.gl = this.editor.bgGl;
+    this._t = 0.0;
     this.init();
   }
 

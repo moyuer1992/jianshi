@@ -282,17 +282,16 @@ class GlTextSprite extends TextSprite {
     var colorArray = [];
     var compIdxArray = [];
 
-    var near = -10;
-    var far = 10;
-    var radius = 1.5;
+    var near = -0.8;
+    var far = 0.8;
+    var radius = 0.1;
     var theta  = 0.7;
     var phi    = 0.1;
-    var dr = 5.0 * Math.PI/180.0;
 
-    var left = -3.0;
-    var right = 3.0;
-    var ytop =3.0;
-    var bottom = -3.0;
+    var left = -0.8;
+    var right = 0.8;
+    var ytop = 0.8;
+    var bottom = -0.8;
 
     var lightPosition = vec4( 1.0, 1.0, 1.0, 0.0 );
     var lightAmbient = vec4( 0.5, 0.5, 0.5, 1.0 );
@@ -318,7 +317,7 @@ class GlTextSprite extends TextSprite {
     gl.useProgram( program );
     gl.enable(gl.DEPTH_TEST);
 
-    gl.viewport( pos.x - fontSize * 4, (this.canvas.height - pos.y) - fontSize * 4, fontSize * 8, fontSize * 8);
+    gl.viewport(pos.x - fontSize, (this.canvas.height - pos.y) - fontSize, fontSize * 2, fontSize * 2);
 
     var ambientProduct = mult(lightAmbient, materialAmbient);
     var diffuseProduct = mult(lightDiffuse, materialDiffuse);

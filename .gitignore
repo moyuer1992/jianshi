@@ -4,3 +4,5 @@ dist
 public/vendor/*
 test/public
 app/scripts/bundle.js
+.DS_Store
+npm-debug.log.*

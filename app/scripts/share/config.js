@@ -2,30 +2,42 @@ var config = {
   fontMap: [
     {
       label: '隶书',
-      value: '隶书'
+      value: 'STBaoliSC-Regular'
     },
     {
       label: '楷体',
-      value: '楷体'
+      value: 'STKaiti'
     },
     {
-      label: '华文新魏',
-      value: '华文新魏'
+      label: '魏碑',
+      value: 'Weibei-SC-Bold'
+    },
+    {
+      label: '隶变',
+      value: 'STLibianSC-Regular'
+    },
+    {
+      label: '娃娃体',
+      value: 'DFWaWaSC-W5'
+    },
+    {
+      label: '行楷',
+      value: 'STXingkaiSC-Bold'
     }
   ],
 
   fontSizeMap: [
     {
       label: '小',
-      value: 40
+      value: 30
     },
     {
       label: '中',
-      value: 50
+      value: 40
     },
     {
       label: '大',
-      value: 60
+      value: 50
     }
   ],
 

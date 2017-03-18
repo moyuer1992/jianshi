@@ -1,5 +1,5 @@
-$tool-bar-bg: #8c9691;
-$tool-bar-color: #47564f;
+$tool-bar-bg: #6b6b6b;
+$tool-bar-color: #000000;
 
 .export-result-modal {
   font-size: .14rem;
@@ -44,7 +44,7 @@ $tool-bar-color: #47564f;
   border: solid $tool-bar-bg 1px;
   border-radius: .05rem;
   background-color: #FEFEFE;
-  box-shadow: 1px 1px 1px 1px rgba(140, 150, 145, 0.25);
+  box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.25);
   font-size: .14rem;
 
   .modal-content {
@@ -76,11 +76,11 @@ $tool-bar-color: #47564f;
       }
 
       .item.active {
-        background-color: rgba(140, 150, 145, 0.1);
+        background-color: rgba(150, 150, 150, 0.1);
       }
 
       .item:hover {
-        background-color: rgba(140, 150, 145, 0.3);
+        background-color: rgba(150, 150, 150, 0.3);
       }
     }
 
@@ -101,7 +101,7 @@ $tool-bar-color: #47564f;
       }
 
       .btn:hover {
-        background-color: rgba(140, 150, 145, 0.9);
+        background-color: rgba(150, 150, 150, 0.9);
       }
 
       .btn.confirm {

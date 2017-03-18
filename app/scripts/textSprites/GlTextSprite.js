@@ -38,7 +38,7 @@ class GlTextSprite extends TextSprite {
     }
 
     if (Object.keys(this.dataMap[font]).indexOf(char) === -1) {
-      var size = 500;
+      var size = 200;
       data = makeTextData(char, size, {
         thick: 0.1,
         font: font
@@ -183,7 +183,7 @@ class GlTextSprite extends TextSprite {
     var gl = this.gl;
 
     this.vertexShader = initGlShader( gl,
-      `attribute vec3 v_position;
+      `attribute vec3 vPosition;
       attribute vec4 vNormal;
       attribute float compIdx;
 
@@ -203,26 +203,26 @@ class GlTextSprite extends TextSprite {
 
       void main() {
         float n = (1.0 - t) * pow((1.0 + compIdx) / compNum, 2.0);
-        float xx = v_position.x - v_position.x * pow(n, 0.5);
-        float yy = v_position.y - 2.0 * v_position.y * pow(n, 2.0);
-        float zz = v_position.z - pow(n, 0.5);
+        float xx = vPosition.x - vPosition.x * pow(n, 0.5);
+        float yy = vPosition.y - 2.0 * vPosition.y * pow(n, 2.0);
+        float zz = vPosition.z - pow(n, 0.5);
         float ww = 1.0;
-        vec4 vPosition = vec4(xx, yy, zz, ww);
-
-        vec3 pos = (modelViewMatrix * vPosition).xyz;
+        
+        vec4 aPosition = vec4(xx, yy, zz, ww);
+        vec3 pos = (modelViewMatrix * aPosition).xyz;
 
         vec3 L;
         
-        if(lightPosition.w == 0.0) L = normalize(lightPosition.xyz);
-        else L = normalize( lightPosition.xyz - pos );
-         
+        if(lightPosition.w == 0.0) 
+          L = normalize(lightPosition.xyz);
+        else 
+          L = normalize( lightPosition.xyz - pos );
+
         vec3 E = -normalize( pos );
-        
         vec3 H = normalize( L + E );
-        
         vec3 N = normalize( normalMatrix*vNormal.xyz);
 
-        vec4 ambient = vec4(vColor, 1.0);//ambientProduct;
+        vec4 ambient = vec4(vColor, 1.0);
 
         float Kd = max( dot(L, N), 0.0 );
         vec4  diffuse = Kd*diffuseProduct;
@@ -235,7 +235,7 @@ class GlTextSprite extends TextSprite {
         }
 
         gl_PointSize = 1.0;
-        gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+        gl_Position = projectionMatrix * modelViewMatrix * aPosition;
 
         if (style == 1) {
           if (dot(N, L) < 0.0) {
@@ -344,7 +344,7 @@ class GlTextSprite extends TextSprite {
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
 
-    var vPosition = gl.getAttribLocation( program, "v_position");
+    var vPosition = gl.getAttribLocation( program, "vPosition");
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
 

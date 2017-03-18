@@ -38,6 +38,7 @@ function makeTextData (text, size, options) {
   ctx.fillText(text, width / 2, height / 2);
   var imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
   var data = imageData.data;
+  console.log(data)
   var grid = 1;
 
   var triangle = function (a, b, c, index, options) {
@@ -61,8 +62,7 @@ function makeTextData (text, size, options) {
           var n = options.n;
           var area = calTriangleArea(a, b, c);
 
-          var color = vec4( 0.0, 0.0, 0.0, area > 100 ? 1.0 : Math.pow(area / 100, 0.5) )
-          console.log(Math.pow(area / 100, 0.5))
+          var color = vec4( 0.0, 0.0, 0.0, area > 100 ? 1.0 : Math.pow(area / 100, 0.5) );
           colorsArray.push(color);
           colorsArray.push(color);
           colorsArray.push(color);
@@ -124,7 +124,7 @@ function makeTextData (text, size, options) {
       var isEdge = false;
 
 
-      if (data[(j * ctx.canvas.width + i) * 4 + 3]) {
+      if (hasPixel(j, i)) {
         value = markPoint(j, i);
       }
       e[j][i] = isEdge;

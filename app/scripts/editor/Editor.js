@@ -591,6 +591,37 @@ class Editor {
     }
   }
 
+  recordTick (imgs, resolve, reject) {
+    if (!this.animating) {
+      return;
+    }
+
+    var t = Date.now() - this.startTime;
+    !this.animationInfo.textStop && (this.animationInfo.textStop = this.textSprite.advance(t));
+    !this.animationInfo.bgStop && (this.animationInfo.bgStop = this.bgSprite.advance(t));
+    
+    if (this.animationInfo.textStop && this.animationInfo.bgStop) {
+      this.stopPlay();
+      $.ajax({
+        url: '/video/record',
+        data: imgs.toString(),
+        contentType: 'text/plain',
+        success: function (data, textStatus, jqXHR) {
+          resolve(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          reject(errorThrown);
+        }
+      })
+
+    } else {
+      this.animationInfo.bgStop ? this.bgSprite.drawStatic() : this.bgSprite.drawFrame();
+      this.animationInfo.textStop ? this.textSprite.drawStatic() : this.textSprite.drawFrame();
+      imgs.push(this.generatePng());
+      window.requestAnimationFrame(this.tick.bind(this));
+    }
+  }
+
   stopPlay () {
     this.animating = false;
     this.renderText();
@@ -599,6 +630,24 @@ class Editor {
 
   generateGif () {
     
+  }
+
+  generateVideo () {
+    return new Promise (
+      function (resolve, reject) {
+        var imgs = [];
+        this.animating = true;
+        this.animationInfo = {
+          textStop: false,
+          bgStop: false
+        };
+        this.startTime = Date.now();
+        this.textSprite.update();
+        this.bgSprite.update();
+
+        window.requestAnimationFrame(this.recordTick.bind(this, imgs, resolve, reject));
+      }
+    )
   }
 
   generateJpeg () {

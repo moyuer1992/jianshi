@@ -3,9 +3,10 @@
   "engines": {
     "node": ">=4"
   },
+  "main": "app.js",
   "scripts": {
-    "build": "node_modules/.bin/browserify app/scripts/main.js -o app/scripts/bundle.js",
-    "start": "npm run build && gulp serve"
+    "build": "node_modules/.bin/browserify app/scripts/main.js -o app/scripts/bundle.js && gulp buildfiles",
+    "start": "node ./server/app.js"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
@@ -49,6 +50,10 @@
   },
   "dependencies": {
     "browserify": "^14.1.0",
-    "earcut": "^2.1.1"
+    "earcut": "^2.1.1",
+    "express": "^4.15.2",
+    "fluent-ffmpeg": "^2.1.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
   }
 }

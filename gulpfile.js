@@ -18,7 +18,7 @@ gulp.task('vendor', function() {
   .pipe($.babel())
   .pipe($.uglify())
   .pipe($.sourcemaps.write('.'))
-  .pipe(gulp.dest('.tmp/scripts'))
+  .pipe(gulp.dest('dist/scripts'))
   .pipe(reload({stream: true}));
 });
 
@@ -35,7 +35,7 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer({browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']}))
     .pipe($.cssnano())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest('dist/styles'))
     .pipe(reload({stream: true}));
 });
 
@@ -55,7 +55,7 @@ gulp.task('scripts', () => {
   .pipe($.babel())
   .pipe($.uglify())
   .pipe($.sourcemaps.write('.'))
-  .pipe(gulp.dest('.tmp/scripts'))
+  .pipe(gulp.dest('dist/scripts'))
   .pipe(reload({stream: true}))
 });
 
@@ -85,7 +85,7 @@ gulp.task('lint:test', () => {
 
 gulp.task('html', ['vendor', 'styles', 'scripts'], () => {
   return gulp.src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
+    .pipe($.useref({searchPath: ['app', '.']}))
     .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));
 });
@@ -105,7 +105,6 @@ gulp.task('images', () => {
 gulp.task('fonts', () => {
   return gulp.src(require('main-bower-files')('**/*.{eot,svg,ttf,woff,woff2}', function (err) {})
     .concat('app/fonts/**/*'))
-    .pipe(gulp.dest('.tmp/fonts'))
     .pipe(gulp.dest('dist/fonts'));
 });
 
@@ -118,21 +117,22 @@ gulp.task('extras', () => {
   }).pipe(gulp.dest('dist'));
 });
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('clean', del.bind(null, ['dist']));
 
-gulp.task('serve', ['vendor', 'styles', 'scripts', 'fonts'], () => {
+gulp.task('buildfiles', ['html', 'vendor', 'styles', 'scripts', 'fonts']);
+
+gulp.task('serve', ['html', 'vendor', 'styles', 'scripts', 'fonts'], () => {
   browserSync({
     notify: false,
-    port: 9000,
     server: {
-      baseDir: ['.tmp', 'app']
+      baseDir: ['dist']
     }
   });
 
   gulp.watch([
     'app/*.html',
     'app/images/**/*',
-    '.tmp/fonts/**/*'
+    'dist/fonts/**/*'
   ]).on('change', reload);
 
   gulp.watch('app/styles/**/*.scss', ['styles']);
@@ -159,7 +159,7 @@ gulp.task('serve:test', ['scripts'], () => {
     server: {
       baseDir: 'test',
       routes: {
-        '/scripts': '.tmp/scripts',
+        '/scripts': 'dist/scripts',
         '/bower_components': 'bower_components'
       }
     }

@@ -126,7 +126,7 @@ class Editor {
     this.$input.css('top', (height / 5) + 'px');
     this.$input.css('left', (width / 2 - 100) + 'px');
     this.$input.css('width', width + 'px');
-    this.$input.css('height', '20px');
+    this.$input.css('height', '1px');
     this.$input.css('z-index', '-1000');
 
     this.$editor.append(this.$input);

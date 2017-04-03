@@ -8,6 +8,15 @@ https://moyuer1992.github.io/pages/jianshi/
 ```
 npm install
 bower install
+```
+Build static files and watch changes:
+```
+npm run build
+```
+
+Then open new terminal tab to run server:
+```
 npm start
 ```
+
 then open url http://localhost:9000/

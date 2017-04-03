@@ -49,35 +49,36 @@ app.post('/video/record', function(req, res) {
   if (!fs.existsSync(resolve(folder))){
     fs.mkdirSync(resolve(folder));
   }
-  var proceedCnt = 0;
-  for (var i = 0; i < imgs.length; i++) {
-    var img = decodeBase64Image(imgs[i])
+
+  Promise.all(imgs.map(function (value, index) {
+    var img = decodeBase64Image(value)
     var data = img.data
-    var type = img .type
-    fs.writeFile(resolve(folder + '/img' + i + '.' + type), data, 'base64', function(err) {
-      if (err) {
-        console.log(err)
-      } else {
-        proceedCnt++;
-        if (proceedCnt === imgs.length) {
-          var proc = new ffmpeg({ source: resolve(folder + '/img%d.png'), nolog: true })
-            .withFps(25)
-            .on('end', function() {
-              res.status(200)
-              res.send({
-                url: '/video/mpeg/' + timeStamp,
-                filename: 'jianshi' + timeStamp + '.mpeg'
-              })
-            })
-            .on('error', function(err) {
-              console.log('an error happened: ' + err.message)
-              res.status(400)
-            })
-            .saveToFile(resolve('video/jianshi' + timeStamp + '.mpeg'))
+    var type = img.type
+    return new Promise(function (resolve, reject) {
+      fs.writeFile(path.resolve(__dirname, (folder + '/img' + index + '.' + type)), data, 'base64', function(err) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
         }
-      }
+      })
     })
-  }
+  })).then(function () {
+    var proc = new ffmpeg({ source: resolve(folder + '/img%d.png'), nolog: true })
+      .withFps(25)
+      .on('end', function() {
+        res.status(200)
+        res.send({
+          url: '/video/mpeg/' + timeStamp,
+          filename: 'jianshi' + timeStamp + '.mpeg'
+        })
+      })
+      .on('error', function(err) {
+        console.log('an error happened: ' + err.message)
+        res.status(400)
+      })
+      .saveToFile(resolve('video/jianshi' + timeStamp + '.mpeg'))
+  })
 })
 
 app.get('/video/mpeg/:timeStamp', function(req, res) {

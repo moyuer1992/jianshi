@@ -53,7 +53,7 @@ gulp.task('scripts', () => {
   .pipe($.plumber())
   .pipe($.sourcemaps.init())
   .pipe($.babel())
-  //.pipe($.uglify())
+  .pipe($.uglify())
   .pipe($.sourcemaps.write('.'))
   .pipe(gulp.dest('dist/scripts'))
   .pipe(reload({stream: true}))

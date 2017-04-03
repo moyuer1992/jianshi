@@ -1,6 +1,48 @@
 $tool-bar-bg: #6b6b6b;
 $tool-bar-color: #000000;
 
+.video-recording-modal {
+  font-size: .14rem;
+
+  .modal-content {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    z-index: 99;
+
+    .dim-layer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-window {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 1rem;
+      height: .5rem;
+      background-color: #EEEEEE;
+      line-height: .5rem;
+      border-radius: .05rem;
+      border: 1px solid #BBBBBB;
+      a {
+        display: inline-block;
+        text-decoration: inherit;
+        color: #555555;
+      }
+
+    }
+  }
+}
+
 .export-result-modal {
   font-size: .14rem;
   
@@ -40,7 +82,7 @@ $tool-bar-color: #000000;
 
 .export-select-modal {
   width: 2rem;
-  height: 1.6rem;
+  height: 2rem;
   border: solid $tool-bar-bg 1px;
   border-radius: .05rem;
   background-color: #FEFEFE;

@@ -51,6 +51,14 @@ var selectModal = {
           resultModal.show(imgData);
         });
         break;
+      case 'video:mpeg':
+        videoRecordingModal.changeStatus('recording');
+        videoRecordingModal.show();
+        editor.generateVideo().then(function (data) {
+          videoRecordingModal.setDownloadLink(data.url, data.filename);
+          videoRecordingModal.changeStatus('recorded');
+        });
+        break;
     }
   }
 }

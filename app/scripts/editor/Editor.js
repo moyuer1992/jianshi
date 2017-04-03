@@ -591,6 +591,43 @@ class Editor {
     }
   }
 
+  recordTick (imgs, resolve, reject) {
+    if (!this.animating) {
+      return;
+    }
+
+    var t = Date.now() - this.startTime;
+    !this.animationInfo.textStop && (this.animationInfo.textStop = this.textSprite.advance(t));
+    !this.animationInfo.bgStop && (this.animationInfo.bgStop = this.bgSprite.advance(t));
+    
+    if (this.animationInfo.textStop && this.animationInfo.bgStop) {
+      this.stopPlay();
+      console.log(imgs)
+      $.ajax({
+        url: '/video/record',
+        data: imgs.join(' '),
+        method: 'POST',
+        contentType: 'text/plain',
+        success: function (data, textStatus, jqXHR) {
+          resolve(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          reject(errorThrown);
+        }
+      });
+
+    } else {
+      if (this.animationInfo) {
+        console.log('bg:' + this.animationInfo.bgStop);
+        console.log('text:' + this.animationInfo.textStop);
+      }
+      this.animationInfo.bgStop ? this.bgSprite.drawStatic() : this.bgSprite.drawFrame();
+      this.animationInfo.textStop ? this.textSprite.drawStatic() : this.textSprite.drawFrame();
+      imgs.push(this.generatePng());
+      window.requestAnimationFrame(this.recordTick.bind(this, imgs, resolve, reject));
+    }
+  }
+
   stopPlay () {
     this.animating = false;
     this.renderText();
@@ -599,6 +636,25 @@ class Editor {
 
   generateGif () {
     
+  }
+
+  generateVideo () {
+    var that = this;
+    return new Promise (
+      function (resolve, reject) {
+        var imgs = [];
+        that.animating = true;
+        that.animationInfo = {
+          textStop: false,
+          bgStop: false
+        };
+        that.startTime = Date.now();
+        that.textSprite.update();
+        that.bgSprite.update();
+
+        window.requestAnimationFrame(that.recordTick.bind(that, imgs, resolve, reject));
+      }
+    )
   }
 
   generateJpeg () {

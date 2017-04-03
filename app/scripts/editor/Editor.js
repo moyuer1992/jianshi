@@ -602,7 +602,7 @@ class Editor {
     
     if (this.animationInfo.textStop && this.animationInfo.bgStop) {
       this.stopPlay();
-      console.log(imgs)
+      imgs.push(this.generatePng());
       $.ajax({
         url: '/video/record',
         data: imgs.join(' '),
@@ -617,10 +617,6 @@ class Editor {
       });
 
     } else {
-      if (this.animationInfo) {
-        console.log('bg:' + this.animationInfo.bgStop);
-        console.log('text:' + this.animationInfo.textStop);
-      }
       this.animationInfo.bgStop ? this.bgSprite.drawStatic() : this.bgSprite.drawFrame();
       this.animationInfo.textStop ? this.textSprite.drawStatic() : this.textSprite.drawFrame();
       imgs.push(this.generatePng());

@@ -14,9 +14,9 @@ Build static files and watch changes:
 npm run build
 ```
 
-Then open new terminal tab to run server:
+After that, open new terminal tab to run server:
 ```
 npm start
 ```
 
-then open url http://localhost:9000/
+Then open url http://localhost:3000/

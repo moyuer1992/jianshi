@@ -74,8 +74,8 @@ app.post('/video/record', function(req, res) {
         })
       })
       .on('error', function(err) {
-        console.log('an error happened: ' + err.message)
-        res.status(400)
+        console.log('ERR: ' + err.message)
+        res.status(500)
       })
       .saveToFile(resolve('video/jianshi' + timeStamp + '.mpeg'))
   })

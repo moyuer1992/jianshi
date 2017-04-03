@@ -53,7 +53,7 @@ gulp.task('scripts', () => {
   .pipe($.plumber())
   .pipe($.sourcemaps.init())
   .pipe($.babel())
-  .pipe($.uglify())
+  //.pipe($.uglify())
   .pipe($.sourcemaps.write('.'))
   .pipe(gulp.dest('dist/scripts'))
   .pipe(reload({stream: true}))
@@ -119,7 +119,18 @@ gulp.task('extras', () => {
 
 gulp.task('clean', del.bind(null, ['dist']));
 
-gulp.task('buildfiles', ['html', 'vendor', 'styles', 'scripts', 'fonts']);
+gulp.task('buildfiles', ['html', 'vendor', 'styles', 'scripts', 'fonts'], () => {
+  gulp.watch([
+    'app/*.html',
+    'app/images/**/*',
+    'dist/fonts/**/*'
+  ]).on('change', reload);
+
+  gulp.watch('app/styles/**/*.scss', ['styles']);
+  gulp.watch('app/scripts/**/*.js', ['scripts']);
+  gulp.watch('app/fonts/**/*', ['fonts']);
+  gulp.watch('bower.json', ['wiredep', 'fonts']);
+});
 
 gulp.task('serve', ['html', 'vendor', 'styles', 'scripts', 'fonts'], () => {
   browserSync({

@@ -49,6 +49,7 @@
     }
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
     "browserify": "^14.1.0",
     "earcut": "^2.1.1",
     "express": "^4.15.2",

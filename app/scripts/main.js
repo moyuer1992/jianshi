@@ -5,3 +5,4 @@ toolBar.init();
 bottomBar.init();
 resultModal.init();
 selectModal.init();
+videoRecordingModal.init();

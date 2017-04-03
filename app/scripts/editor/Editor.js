@@ -126,7 +126,7 @@ class Editor {
     this.$input.css('top', (height / 5) + 'px');
     this.$input.css('left', (width / 2 - 100) + 'px');
     this.$input.css('width', width + 'px');
-    this.$input.css('height', '20px');
+    this.$input.css('height', '1px');
     this.$input.css('z-index', '-1000');
 
     this.$editor.append(this.$input);
@@ -602,9 +602,11 @@ class Editor {
     
     if (this.animationInfo.textStop && this.animationInfo.bgStop) {
       this.stopPlay();
+      console.log(imgs)
       $.ajax({
         url: '/video/record',
-        data: imgs.toString(),
+        data: imgs.join(' '),
+        method: 'POST',
         contentType: 'text/plain',
         success: function (data, textStatus, jqXHR) {
           resolve(data);
@@ -612,13 +614,17 @@ class Editor {
         error: function (jqXHR, textStatus, errorThrown) {
           reject(errorThrown);
         }
-      })
+      });
 
     } else {
+      if (this.animationInfo) {
+        console.log('bg:' + this.animationInfo.bgStop);
+        console.log('text:' + this.animationInfo.textStop);
+      }
       this.animationInfo.bgStop ? this.bgSprite.drawStatic() : this.bgSprite.drawFrame();
       this.animationInfo.textStop ? this.textSprite.drawStatic() : this.textSprite.drawFrame();
       imgs.push(this.generatePng());
-      window.requestAnimationFrame(this.tick.bind(this));
+      window.requestAnimationFrame(this.recordTick.bind(this, imgs, resolve, reject));
     }
   }
 
@@ -633,19 +639,20 @@ class Editor {
   }
 
   generateVideo () {
+    var that = this;
     return new Promise (
       function (resolve, reject) {
         var imgs = [];
-        this.animating = true;
-        this.animationInfo = {
+        that.animating = true;
+        that.animationInfo = {
           textStop: false,
           bgStop: false
         };
-        this.startTime = Date.now();
-        this.textSprite.update();
-        this.bgSprite.update();
+        that.startTime = Date.now();
+        that.textSprite.update();
+        that.bgSprite.update();
 
-        window.requestAnimationFrame(this.recordTick.bind(this, imgs, resolve, reject));
+        window.requestAnimationFrame(that.recordTick.bind(that, imgs, resolve, reject));
       }
     )
   }

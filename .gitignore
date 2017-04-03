@@ -6,3 +6,6 @@ test/public
 app/scripts/bundle.js
 .DS_Store
 npm-debug.log.*
+server/images/*
+server/video/*
+npm-debug.log

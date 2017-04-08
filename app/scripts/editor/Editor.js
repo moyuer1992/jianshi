@@ -87,9 +87,7 @@ class Editor {
     this.$editor.css('width', width + 'px');
     this.$editor.css('height', height + 'px');
     this.$editor.css('top', (windowHeight - height - this.options.bottomBarHeight) / 2 + 'px');
-    //this.$editor.css('background-color', 'rgba(217, 218, 214)');
     this.$editor.css('background-color', 'rgb(241, 240, 236)');
-
     this.hiddenCanvas = document.createElement('canvas');
     this.hiddenCtx = this.hiddenCanvas.getContext('2d');
     this.hiddenCanvas.width = this.style.lineHeight();
@@ -488,8 +486,8 @@ class Editor {
         for (var i = 0; i < lines.length; i++) {
           var lineMap = [];
           var chars = lines[i].split('');
-          var charLength = this.style.fontSize; //this.ctx.measureText(chars[j]).width;
-          var length = charLength * chars.length;//this.measureStrLength(lines[i]);//this.ctx.measureText(lines[i]).width;
+          var charLength = this.style.fontSize;
+          var length = charLength * chars.length;
           
           if (length > (this.canvasNode.width - this.style.padding[0] - this.style.padding[3])) {
             xCursor = this.style.padding[3];
@@ -507,7 +505,7 @@ class Editor {
           while (length > (this.canvasNode.width - this.style.padding[0] - this.style.padding[3])) {
             xCursor = this.style.padding[3];
             for (var j = 0; j < chars.length; j++) {
-              var charGap = charLength;// * this.measureStrLength(chars[j]);
+              var charGap = charLength;
               xCursor += charGap;
               lineMap.push({
                 char: chars[j],
@@ -519,7 +517,7 @@ class Editor {
               if ((j + 1 < chars.length) && (xCursor + charGap > this.canvasNode.width - this.style.padding[1])) {
                 yCursor += this.style.lineHeight();
                 chars.splice(0, j + 1);
-                length = charLength * chars.length;//maersureStrLength(chars.join(''));
+                length = charLength * chars.length;
                 break;
               }
             }
@@ -528,7 +526,7 @@ class Editor {
           if (length) {
             xCursor = ((this.canvasNode.width - this.style.padding[0] - this.style.padding[3]) - length) / 2 + this.style.padding[3];
             for (j = 0; j < chars.length; j++) {
-              var charGap = charLength;// * this.measureStrLength(chars[j]);
+              var charGap = charLength;
               xCursor += charGap;
               lineMap.push({
                 char: chars[j],
